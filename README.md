@@ -14,5 +14,6 @@ python3 cloneall.py targetdir gitlabhostname gitlabtoken
 ```
 * targetdir:git clone root dir
 * gitlabhostname:gitlab.example.com
-* gitlabtoken:You can find or reset your private token in your profile
+* gitlabtoken:You can find or reset your private token in your profile (gitlab.example.com/profile/account)
+* protocol:default value is "http"
 ## pullall
