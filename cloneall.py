@@ -8,9 +8,10 @@ workdir=sys.argv[1]
 gitlabhost=sys.argv[2]
 token=sys.argv[3]
 protocol="http"
+#print(sys.argv)
 if len(sys.argv)>=5:
     protocol=sys.argv[4]
-print('workdir:%s host:%s token=%s'%(workdir,gitlabhost,"token"))
+print('workdir:%s host:%s token=%s %s'%(workdir,gitlabhost,"token",protocol))
 
 if not os.path.exists(workdir) or not os.path.isdir(workdir):
     print('dir %s not exists'%(workdir))
