@@ -24,6 +24,7 @@ page=1
 allProjectsDict=[]
 while page==1 or len(allProjectsDict)==100:
     print('%s://%s/api/v3/projects?private_token=%s&per_page=100&page=%d'%(protocol,gitlabhost,"token",page))
+    ####%s://%s/api/v3/projects/search/a
     allProjects= urlopen('%s://%s/api/v3/projects?private_token=%s&per_page=100&page=%d'%(protocol,gitlabhost,token,page))
     page=page+1
     allProjectsDict = json.loads(allProjects.read().decode())
@@ -35,7 +36,7 @@ while page==1 or len(allProjectsDict)==100:
             if not os.path.exists(tpath):
                 print('mkdir %s' % (thisProject['namespace']['path']))
                 command     = shlex.split('mkdir %s' % (thisProject['namespace']['path']))
-                resultCode  = subprocess.Popen(command)
+                resultCode  = subprocess.Popen(command,cwd=workdir)
             if not os.path.exists(workdir+"/"+thisProject['path_with_namespace']):
                 #os.chdir(tpath)
                 print('git clone %s' % thisProjectURL)
@@ -44,7 +45,7 @@ while page==1 or len(allProjectsDict)==100:
             else:
                 print('git pull %s' % thisProjectURL)
                 #os.chdir(workdir+"/"+thisProject['path_with_namespace'])
-                command     = shlex.split('git pull')
+                command     = shlex.split('git pull --all')
                 resultCode  = subprocess.Popen(command,cwd=workdir+"/"+thisProject['path_with_namespace'])
             resultCode.communicate()
         except Exception as e:

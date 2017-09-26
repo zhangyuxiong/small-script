@@ -13,11 +13,24 @@ filelist=$(ls $targetpath)
 for file in $filelist
 do
 
-	if [ -d "$targetpath/$file" ]
+	if [ -d "$targetpath/$file" ] && [ -d "$targetpath/$file/.git" ]
 	then
 		echo git pull $targetpath/$file
 		cd "$targetpath/$file"
 		git pull
-		cd ..
+		cd "$targetpath"
+	elif [ -d "$targetpath/$file" ]
+	then
+		cfilelist=$(ls $targetpath/$file)
+		for cfile in $cfilelist
+		do
+			if [ -d "$targetpath/$file/$cfile" ] && [ -d "$targetpath/$file/$cfile/.git" ]
+			then
+				echo git pull $targetpath/$file
+				cd "$targetpath/$file/$cfile"
+				git pull
+				cd "$targetpath"
+			fi
+		done
 	fi
 done
